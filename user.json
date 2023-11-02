@@ -1,0 +1,42 @@
+{
+  "person": {
+    "name": "John Doe",
+    "age": 30,
+    "address": {
+      "street": "123 Main St",
+      "city": "Exampleville",
+      "postal_code": "12345"
+    },
+    "email": "john.doe@example.com",
+    "phone_numbers": [
+      {
+        "type": "home",
+        "number": "555-123-4567"
+      },
+      {
+        "type": "work",
+        "number": "555-987-6543"
+      }
+    ],
+    "is_employee": true
+  },
+  "hobbies": [
+    "reading",
+    "hiking",
+    "photography"
+  ],
+  "friends": [
+    {
+      "name": "Alice",
+      "age": 28,
+      "email": "alice@example.com"
+    },
+    {
+      "name": "Bob",
+      "age": 32,
+      "email": "bob@example.com"
+    }
+  ],
+  "is_married": false,
+  "favorite_books": null
+}
