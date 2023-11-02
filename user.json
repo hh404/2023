@@ -4,8 +4,8 @@
     "age": 30,
     "address": {
       "street": "123 Main St",
-      "city": "Exampleville",
-      "postal_code": "12345"
+      "city": "tianjin",
+      "postal_code": "3332222"
     },
     "email": "john.doe@example.com",
     "phone_numbers": [
