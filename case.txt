@@ -15,3 +15,54 @@ a2	b2	c1	d1	m13
 a2	b2	c1	d2	m14
 a2	b2	c2	d1	m15
 a2	b2	c2	d2	m16
+
+
+a1 -> a2
+a	b	c	d	m	转换到	标记状态改变
+a1	b1	c1	d1	m1	m9	a1->a2
+a1	b1	c1	d2	m2	m10	a1->a2
+a1	b1	c2	d1	m3	m11	a1->a2
+a1	b1	c2	d2	m4	m12	a1->a2
+a1	b2	c1	d1	m5	m13	a1->a2
+a1	b2	c1	d2	m6	m14	a1->a2
+a1	b2	c2	d1	m7	m15	a1->a2
+a1	b2	c2	d2	m8	m16	a1->a2
+b1 -> b2
+a	b	c	d	m	转换到	标记状态改变
+a1	b1	c1	d1	m1	m5	b1->b2
+a1	b1	c1	d2	m2	m6	b1->b2
+a1	b1	c2	d1	m3	m7	b1->b2
+a1	b1	c2	d2	m4	m8	b1->b2
+a2	b1	c1	d1	m9	m13	b1->b2
+a2	b1	c1	d2	m10	m14	b1->b2
+a2	b1	c2	d1	m11	m15	b1->b2
+a2	b1	c2	d2	m12	m16	b1->b2
+c1 -> c2
+a	b	c	d	m	转换到	标记状态改变
+a1	b1	c1	d1	m1	m3	c1->c2
+a1	b1	c1	d2	m2	m4	c1->c2
+a1	b2	c1	d1	m5	m7	c1->c2
+a1	b2	c1	d2	m6	m8	c1->c2
+a2	b1	c1	d1	m9	m11	c1->c2
+a2	b1	c1	d2	m10	m12	c1->c2
+a2	b2	c1	d1	m13	m15	c1->c2
+a2	b2	c1	d2	m14	m16	c1->c2
+d1 -> d2
+a	b	c	d	m	转换到	标记状态改变
+a1	b1	c1	d1	m1	m2	d1->d2
+a1	b1	c1	d2	m2	m1	d2->d1
+a1	b1	c2	d1	m3	m4	d1->d2
+a1	b1	c2	d2	m4	m3	d2->d1
+a1	b2	c1	d1	m5	m6	d1->d2
+a1	b2	c1	d2	m6	m5	d2->d1
+a1	b2	c2	d1	m7	m8	d1->d2
+a1	b2	c2	d2	m8	m7	d2->d1
+a2	b1	c1	d1	m9	m10	d1->d2
+a2	b1	c1	d2	m10	m9	d2->d1
+a2	b1	c2	d1	m11	m12	d1->d2
+a2	b1	c2	d2	m12	m11	d2->d1
+a2	b2	c1	d1	m13	m14	d1->d2
+a2	b2	c1	d2	m14	m13	d2->d1
+a2	b2	c2	d1	m15	m16	d1->d2
+a2	b2	c2	d2	m16	m15	d2->d1
+每个表格列出了单个状态变化的情况，包括原始状态和转换
