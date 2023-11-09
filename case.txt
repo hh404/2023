@@ -1,0 +1,17 @@
+a	b	c	d	m
+a1	b1	c1	d1	m1
+a1	b1	c1	d2	m2
+a1	b1	c2	d1	m3
+a1	b1	c2	d2	m4
+a1	b2	c1	d1	m5
+a1	b2	c1	d2	m6
+a1	b2	c2	d1	m7
+a1	b2	c2	d2	m8
+a2	b1	c1	d1	m9
+a2	b1	c1	d2	m10
+a2	b1	c2	d1	m11
+a2	b1	c2	d2	m12
+a2	b2	c1	d1	m13
+a2	b2	c1	d2	m14
+a2	b2	c2	d1	m15
+a2	b2	c2	d2	m16
