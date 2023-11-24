@@ -1,0 +1,1 @@
+cat data.txt | awk -F', ' '{split($1, arr, ": "); data[arr[1]] = $2} END {for (key in data) print "\"" key "\": " data[key] }' > b.txt
