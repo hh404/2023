@@ -16,15 +16,16 @@ if let aText = try? String(contentsOfFile: "a.txt", encoding: .utf8),
         }
     }
     
-    // 解析b.txt的内容并过滤出匹配的键值对
+    // 解析b.txt的内容并过滤出匹配的键，并使用b.txt中的值
     var filteredLines: [String] = []
     let bLines = bText.components(separatedBy: "\n")
     for line in bLines {
         let components = line.components(separatedBy: ":")
         if components.count == 2 {
             let key = components[0].trimmingCharacters(in: .whitespacesAndNewlines)
+            let bValue = components[1].trimmingCharacters(in: .whitespacesAndNewlines)
             if let aValue = aDictionary[key] {
-                let filteredLine = "\"\(key)\": \"\(aValue)\""
+                let filteredLine = "\"\(key)\": \"\(bValue)\""
                 filteredLines.append(filteredLine)
             }
         }
