@@ -4,49 +4,55 @@ let fileManager = FileManager.default
 let currentDirectoryPath = fileManager.currentDirectoryPath
 
 // 定义文件路径
-let enJsonPath = "\(currentDirectoryPath)/en.json"
-let cnJsonPath = "\(currentDirectoryPath)/cn.json"
-let outputPath = "\(currentDirectoryPath)/filtered_cn.json"
+let enFilePath = "\(currentDirectoryPath)/en"
+let cnFilePath = "\(currentDirectoryPath)/cn"
+let outputPath = "\(currentDirectoryPath)/filtered_cn"
 
 // 读取文件内容
-func readJsonFile(atPath path: String) -> [String: String]? {
-    guard let jsonData = fileManager.contents(atPath: path) else { return nil }
+func readFile(atPath path: String) -> String? {
     do {
-        let jsonDict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: String]
-        return jsonDict
+        return try String(contentsOfFile: path, encoding: .utf8)
     } catch {
-        print("Error reading JSON file: \(error)")
+        print("Error reading file: \(error)")
         return nil
     }
 }
 
-// 将字典写入JSON文件
-func writeJsonFile(dictionary: [String: String], toPath path: String) {
-    do {
-        let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: [.prettyPrinted])
-        fileManager.createFile(atPath: path, contents: jsonData, attributes: nil)
-    } catch {
-        print("Error writing JSON file: \(error)")
-    }
-}
-
-// 使用en.json的键过滤cn.json
-func filterJson(enDict: [String: String], cnDict: [String: String]) -> [String: String] {
-    var filteredDict = [String: String]()
-    for key in enDict.keys {
-        if let value = cnDict[key] {
-            filteredDict[key] = value
+// 解析内容为键值对
+func parseContent(content: String) -> [String: String] {
+    var dict = [String: String]()
+    let lines = content.split(separator: "\n")
+    for line in lines {
+        let components = line.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: true)
+        if components.count == 2 {
+            let key = String(components[0]).trimmingCharacters(in: .whitespaces)
+            let value = String(components[1]).trimmingCharacters(in: .whitespaces)
+            dict[key] = value
         }
     }
-    return filteredDict
+    return dict
+}
+
+// 写入文件
+func writeFile(content: String, toPath path: String) {
+    do {
+        try content.write(toFile: path, atomically: true, encoding: .utf8)
+    } catch {
+        print("Error writing file: \(error)")
+    }
 }
 
 // 执行过滤操作并写入新文件
-if let enDict = readJsonFile(atPath: enJsonPath),
-   let cnDict = readJsonFile(atPath: cnJsonPath) {
-    let filteredDict = filterJson(enDict: enDict, cnDict: cnDict)
-    writeJsonFile(dictionary: filteredDict, toPath: outputPath)
-    print("Filtered JSON has been written to \(outputPath)")
+if let enContent = readFile(atPath: enFilePath),
+   let cnContent = readFile(atPath: cnFilePath) {
+    let enDict = parseContent(content: enContent)
+    let cnDict = parseContent(content: cnContent)
+    let filteredContent = cnDict
+        .filter { enDict.keys.contains($0.key) }
+        .map { "\($0.key): \($0.value)" }
+        .joined(separator: "\n")
+    writeFile(content: filteredContent, toPath: outputPath)
+    print("Filtered content has been written to \(outputPath)")
 } else {
-    print("Failed to read JSON files.")
+    print("Failed to read files.")
 }
