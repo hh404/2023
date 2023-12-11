@@ -22,3 +22,10 @@ sudo cp /usr/bin/ruby /usr/bin/ruby_backup
 
 sudo cp /usr/local/bin/ruby /usr/bin/ruby
 
+
+HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles brew install openssl@3.2.0
+
+HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles brew install openssl@3.2.0
+
+brew install openssl@3.2.0 -v
+
