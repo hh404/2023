@@ -1,0 +1,25 @@
+import Foundation
+
+func matchesPattern(_ input: String, pattern: String) -> Bool {
+    do {
+        let regex = try NSRegularExpression(pattern: pattern, options: [])
+        let range = NSRange(location: 0, length: input.utf16.count)
+        let match = regex.firstMatch(in: input, options: [], range: range)
+        return match != nil
+    } catch {
+        print("Invalid regex: \(error.localizedDescription)")
+        return false
+    }
+}
+
+// 示例用法
+let pattern = "^\\s*$" // 检查字符串是否为空或仅包含空白字符
+let test1 = "   "
+let test2 = ""
+let test3 = "abc"
+let test4 = " a "
+
+print(matchesPattern(test1, pattern: pattern)) // true
+print(matchesPattern(test2, pattern: pattern)) // true
+print(matchesPattern(test3, pattern: pattern)) // false
+print(matchesPattern(test4, pattern: pattern)) // false
