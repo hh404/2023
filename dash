@@ -9,7 +9,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if let currentText = textField.text {
-            // 更新文本内容
+            // 获取替换后的新文本
             let newText = (currentText as NSString).replacingCharacters(in: range, with: string)
             
             // 移除已有的 '-'
@@ -23,8 +23,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 modifiedText.insert("-", at: index)
             }
 
-            // 保存光标位置
-            let cursorOffset = range.location + string.count
+            // 保存光标位置（移除'-'后的原始位置）
+            var cursorOffset = range.location + string.count
+            if range.location >= 5 {
+                cursorOffset += 1
+            }
+            
             let cursorPosition = textField.position(from: textField.beginningOfDocument, offset: cursorOffset)
 
             // 更新 UITextField 内容
@@ -35,7 +39,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 textField.selectedTextRange = textField.textRange(from: cursorPosition, to: cursorPosition)
             }
 
-            return false // 手动更新内容
+            return false // 手动处理文本更新
         }
         return true
     }
