@@ -1,0 +1,33 @@
+class ViewController: UIViewController, UITextFieldDelegate {
+
+    @IBOutlet weak var textField: UITextField!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        textField.delegate = self
+    }
+
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = textField.text {
+            // Get the updated text
+            let newText = (text as NSString).replacingCharacters(in: range, with: string)
+            
+            // Check if there are less than 2 characters and make them uppercase
+            let modifiedText = newText.prefix(2).uppercased() + newText.dropFirst(2)
+            
+            // Save the current cursor position
+            let cursorPosition = textField.position(from: textField.beginningOfDocument, offset: range.location + string.count)
+
+            // Update the text field without affecting the cursor
+            textField.text = modifiedText
+            
+            if let cursorPosition = cursorPosition {
+                // Restore the cursor position
+                textField.selectedTextRange = textField.textRange(from: cursorPosition, to: cursorPosition)
+            }
+
+            return false  // We manually handled the text update
+        }
+        return true
+    }
+}
