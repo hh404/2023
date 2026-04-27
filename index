@@ -1,0 +1,22 @@
+{
+  "id": "auth-login",
+  "name": "Auth Login",
+  "method": "POST",
+  "path": "/api/v1/auth/login",
+  "cases": {
+    test.login.device.faceid.risk": {
+      "name": "test FaceID Risk",
+      "desc": "FaceID login under risk policy branch.",
+      "bau": "20260404122322",
+      "current": "20260407153010"
+    },
+    "test.login.invalid.password": {
+      "name": "test Invalid Password",
+      "desc": "Wrong password path should return AUTH_401.",
+      "bau": "20260404122322",
+      "current": "20260407153010"
+    }
+  }
+}
+
+request--test.login.device.faceid.risk--20260404122322
