@@ -1,0 +1,305 @@
+[url "file:///Users/hans/mirror/github.com/Alamofire/Alamofire.git"]
+	insteadOf = https://github.com/Alamofire/Alamofire.git
+	insteadOf = https://github.com/Alamofire/Alamofire
+	insteadOf = git@github.com:Alamofire/Alamofire.git
+	insteadOf = git@github.com:Alamofire/Alamofire
+[url "file:///Users/hans/mirror/github.com/AliSoftware/OHHTTPStubs.git"]
+	insteadOf = https://github.com/AliSoftware/OHHTTPStubs.git
+	insteadOf = https://github.com/AliSoftware/OHHTTPStubs
+	insteadOf = git@github.com:AliSoftware/OHHTTPStubs.git
+	insteadOf = git@github.com:AliSoftware/OHHTTPStubs
+[url "file:///Users/hans/mirror/github.com/CombineCommunity/CombineExt.git"]
+	insteadOf = https://github.com/CombineCommunity/CombineExt.git
+	insteadOf = https://github.com/CombineCommunity/CombineExt
+	insteadOf = git@github.com:CombineCommunity/CombineExt.git
+	insteadOf = git@github.com:CombineCommunity/CombineExt
+[url "file:///Users/hans/mirror/github.com/LottieFiles/dotlottie-ios.git"]
+	insteadOf = https://github.com/LottieFiles/dotlottie-ios.git
+	insteadOf = https://github.com/LottieFiles/dotlottie-ios
+	insteadOf = git@github.com:LottieFiles/dotlottie-ios.git
+	insteadOf = git@github.com:LottieFiles/dotlottie-ios
+[url "file:///Users/hans/mirror/github.com/Moya/Moya.git"]
+	insteadOf = https://github.com/Moya/Moya.git
+	insteadOf = https://github.com/Moya/Moya
+	insteadOf = git@github.com:Moya/Moya.git
+	insteadOf = git@github.com:Moya/Moya
+[url "file:///Users/hans/mirror/github.com/Quick/Nimble.git"]
+	insteadOf = https://github.com/Quick/Nimble.git
+	insteadOf = https://github.com/Quick/Nimble
+	insteadOf = git@github.com:Quick/Nimble.git
+	insteadOf = git@github.com:Quick/Nimble
+[url "file:///Users/hans/mirror/github.com/Quick/Quick.git"]
+	insteadOf = https://github.com/Quick/Quick.git
+	insteadOf = https://github.com/Quick/Quick
+	insteadOf = git@github.com:Quick/Quick.git
+	insteadOf = git@github.com:Quick/Quick
+[url "file:///Users/hans/mirror/github.com/ReactiveCocoa/ReactiveSwift.git"]
+	insteadOf = https://github.com/ReactiveCocoa/ReactiveSwift.git
+	insteadOf = https://github.com/ReactiveCocoa/ReactiveSwift
+	insteadOf = git@github.com:ReactiveCocoa/ReactiveSwift.git
+	insteadOf = git@github.com:ReactiveCocoa/ReactiveSwift
+[url "file:///Users/hans/mirror/github.com/ReactiveX/RxSwift.git"]
+	insteadOf = https://github.com/ReactiveX/RxSwift.git
+	insteadOf = https://github.com/ReactiveX/RxSwift
+	insteadOf = git@github.com:ReactiveX/RxSwift.git
+	insteadOf = git@github.com:ReactiveX/RxSwift
+[url "file:///Users/hans/mirror/github.com/SlaunchaMan/GCDWebServer.git"]
+	insteadOf = https://github.com/SlaunchaMan/GCDWebServer.git
+	insteadOf = https://github.com/SlaunchaMan/GCDWebServer
+	insteadOf = git@github.com:SlaunchaMan/GCDWebServer.git
+	insteadOf = git@github.com:SlaunchaMan/GCDWebServer
+[url "file:///Users/hans/mirror/github.com/SnapKit/SnapKit.git"]
+	insteadOf = https://github.com/SnapKit/SnapKit.git
+	insteadOf = https://github.com/SnapKit/SnapKit
+	insteadOf = git@github.com:SnapKit/SnapKit.git
+	insteadOf = git@github.com:SnapKit/SnapKit
+[url "file:///Users/hans/mirror/github.com/Square/Valet.git"]
+	insteadOf = https://github.com/Square/Valet.git
+	insteadOf = https://github.com/Square/Valet
+	insteadOf = git@github.com:Square/Valet.git
+	insteadOf = git@github.com:Square/Valet
+[url "file:///Users/hans/mirror/github.com/SwiftyJSON/SwiftyJSON.git"]
+	insteadOf = https://github.com/SwiftyJSON/SwiftyJSON.git
+	insteadOf = https://github.com/SwiftyJSON/SwiftyJSON
+	insteadOf = git@github.com:SwiftyJSON/SwiftyJSON.git
+	insteadOf = git@github.com:SwiftyJSON/SwiftyJSON
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-core-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-core-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-core-ios
+	insteadOf = git@github.com:adobe/aepsdk-core-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-core-ios
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-edgeidentity-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-edgeidentity-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-edgeidentity-ios
+	insteadOf = git@github.com:adobe/aepsdk-edgeidentity-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-edgeidentity-ios
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-rulesengine-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-rulesengine-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-rulesengine-ios
+	insteadOf = git@github.com:adobe/aepsdk-rulesengine-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-rulesengine-ios
+[url "file:///Users/hans/mirror/github.com/airbnb/lottie-ios.git"]
+	insteadOf = https://github.com/airbnb/lottie-ios.git
+	insteadOf = https://github.com/airbnb/lottie-ios
+	insteadOf = git@github.com:airbnb/lottie-ios.git
+	insteadOf = git@github.com:airbnb/lottie-ios
+[url "file:///Users/hans/mirror/github.com/airbnb/swift.git"]
+	insteadOf = https://github.com/airbnb/swift.git
+	insteadOf = https://github.com/airbnb/swift
+	insteadOf = git@github.com:airbnb/swift.git
+	insteadOf = git@github.com:airbnb/swift
+[url "file:///Users/hans/mirror/github.com/apollographql/apollo-ios.git"]
+	insteadOf = https://github.com/apollographql/apollo-ios.git
+	insteadOf = https://github.com/apollographql/apollo-ios
+	insteadOf = git@github.com:apollographql/apollo-ios.git
+	insteadOf = git@github.com:apollographql/apollo-ios
+[url "file:///Users/hans/mirror/github.com/apple/swift-argument-parser.git"]
+	insteadOf = https://github.com/apple/swift-argument-parser.git
+	insteadOf = https://github.com/apple/swift-argument-parser
+	insteadOf = git@github.com:apple/swift-argument-parser.git
+	insteadOf = git@github.com:apple/swift-argument-parser
+[url "file:///Users/hans/mirror/github.com/apple/swift-collections.git"]
+	insteadOf = https://github.com/apple/swift-collections.git
+	insteadOf = https://github.com/apple/swift-collections
+	insteadOf = git@github.com:apple/swift-collections.git
+	insteadOf = git@github.com:apple/swift-collections
+[url "file:///Users/hans/mirror/github.com/apple/swift-docc-plugin.git"]
+	insteadOf = https://github.com/apple/swift-docc-plugin.git
+	insteadOf = https://github.com/apple/swift-docc-plugin
+	insteadOf = git@github.com:apple/swift-docc-plugin.git
+	insteadOf = git@github.com:apple/swift-docc-plugin
+[url "file:///Users/hans/mirror/github.com/apple/swift-protobuf.git"]
+	insteadOf = https://github.com/apple/swift-protobuf.git
+	insteadOf = https://github.com/apple/swift-protobuf
+	insteadOf = git@github.com:apple/swift-protobuf.git
+	insteadOf = git@github.com:apple/swift-protobuf
+[url "file:///Users/hans/mirror/github.com/devicekit/DeviceKit.git"]
+	insteadOf = https://github.com/devicekit/DeviceKit.git
+	insteadOf = https://github.com/devicekit/DeviceKit
+	insteadOf = git@github.com:devicekit/DeviceKit.git
+	insteadOf = git@github.com:devicekit/DeviceKit
+[url "file:///Users/hans/mirror/github.com/erikdoe/ocmock.git"]
+	insteadOf = https://github.com/erikdoe/ocmock.git
+	insteadOf = https://github.com/erikdoe/ocmock
+	insteadOf = git@github.com:erikdoe/ocmock.git
+	insteadOf = git@github.com:erikdoe/ocmock
+[url "file:///Users/hans/mirror/github.com/exyte/PopupView.git"]
+	insteadOf = https://github.com/exyte/PopupView.git
+	insteadOf = https://github.com/exyte/PopupView
+	insteadOf = git@github.com:exyte/PopupView.git
+	insteadOf = git@github.com:exyte/PopupView
+[url "file:///Users/hans/mirror/github.com/firebase/leveldb.git"]
+	insteadOf = https://github.com/firebase/leveldb.git
+	insteadOf = https://github.com/firebase/leveldb
+	insteadOf = git@github.com:firebase/leveldb.git
+	insteadOf = git@github.com:firebase/leveldb
+[url "file:///Users/hans/mirror/github.com/firebase/nanopb.git"]
+	insteadOf = https://github.com/firebase/nanopb.git
+	insteadOf = https://github.com/firebase/nanopb
+	insteadOf = git@github.com:firebase/nanopb.git
+	insteadOf = git@github.com:firebase/nanopb
+[url "file:///Users/hans/mirror/github.com/google/GoogleAppMeasurement.git"]
+	insteadOf = https://github.com/google/GoogleAppMeasurement.git
+	insteadOf = https://github.com/google/GoogleAppMeasurement
+	insteadOf = git@github.com:google/GoogleAppMeasurement.git
+	insteadOf = git@github.com:google/GoogleAppMeasurement
+[url "file:///Users/hans/mirror/github.com/google/GoogleDataTransport.git"]
+	insteadOf = https://github.com/google/GoogleDataTransport.git
+	insteadOf = https://github.com/google/GoogleDataTransport
+	insteadOf = git@github.com:google/GoogleDataTransport.git
+	insteadOf = git@github.com:google/GoogleDataTransport
+[url "file:///Users/hans/mirror/github.com/google/GoogleUtilities.git"]
+	insteadOf = https://github.com/google/GoogleUtilities.git
+	insteadOf = https://github.com/google/GoogleUtilities
+	insteadOf = git@github.com:google/GoogleUtilities.git
+	insteadOf = git@github.com:google/GoogleUtilities
+[url "file:///Users/hans/mirror/github.com/google/abseil-cpp-binary.git"]
+	insteadOf = https://github.com/google/abseil-cpp-binary.git
+	insteadOf = https://github.com/google/abseil-cpp-binary
+	insteadOf = git@github.com:google/abseil-cpp-binary.git
+	insteadOf = git@github.com:google/abseil-cpp-binary
+[url "file:///Users/hans/mirror/github.com/google/app-check.git"]
+	insteadOf = https://github.com/google/app-check.git
+	insteadOf = https://github.com/google/app-check
+	insteadOf = git@github.com:google/app-check.git
+	insteadOf = git@github.com:google/app-check
+[url "file:///Users/hans/mirror/github.com/google/grpc-binary.git"]
+	insteadOf = https://github.com/google/grpc-binary.git
+	insteadOf = https://github.com/google/grpc-binary
+	insteadOf = git@github.com:google/grpc-binary.git
+	insteadOf = git@github.com:google/grpc-binary
+[url "file:///Users/hans/mirror/github.com/google/gtm-session-fetcher.git"]
+	insteadOf = https://github.com/google/gtm-session-fetcher.git
+	insteadOf = https://github.com/google/gtm-session-fetcher
+	insteadOf = git@github.com:google/gtm-session-fetcher.git
+	insteadOf = git@github.com:google/gtm-session-fetcher
+[url "file:///Users/hans/mirror/github.com/google/interop-ios-for-google-sdks.git"]
+	insteadOf = https://github.com/google/interop-ios-for-google-sdks.git
+	insteadOf = https://github.com/google/interop-ios-for-google-sdks
+	insteadOf = git@github.com:google/interop-ios-for-google-sdks.git
+	insteadOf = git@github.com:google/interop-ios-for-google-sdks
+[url "file:///Users/hans/mirror/github.com/google/promises.git"]
+	insteadOf = https://github.com/google/promises.git
+	insteadOf = https://github.com/google/promises
+	insteadOf = git@github.com:google/promises.git
+	insteadOf = git@github.com:google/promises
+[url "file:///Users/hans/mirror/github.com/groue/GRDB.swift.git"]
+	insteadOf = https://github.com/groue/GRDB.swift.git
+	insteadOf = https://github.com/groue/GRDB.swift
+	insteadOf = git@github.com:groue/GRDB.swift.git
+	insteadOf = git@github.com:groue/GRDB.swift
+[url "file:///Users/hans/mirror/github.com/huri000/SwiftEntryKit.git"]
+	insteadOf = https://github.com/huri000/SwiftEntryKit.git
+	insteadOf = https://github.com/huri000/SwiftEntryKit
+	insteadOf = git@github.com:huri000/SwiftEntryKit.git
+	insteadOf = git@github.com:huri000/SwiftEntryKit
+[url "file:///Users/hans/mirror/github.com/infinum/Japx.git"]
+	insteadOf = https://github.com/infinum/Japx.git
+	insteadOf = https://github.com/infinum/Japx
+	insteadOf = git@github.com:infinum/Japx.git
+	insteadOf = git@github.com:infinum/Japx
+[url "file:///Users/hans/mirror/github.com/kif-framework/KIF.git"]
+	insteadOf = https://github.com/kif-framework/KIF.git
+	insteadOf = https://github.com/kif-framework/KIF
+	insteadOf = git@github.com:kif-framework/KIF.git
+	insteadOf = git@github.com:kif-framework/KIF
+[url "file:///Users/hans/mirror/github.com/kishikawakatsumi/KeychainAccess.git"]
+	insteadOf = https://github.com/kishikawakatsumi/KeychainAccess.git
+	insteadOf = https://github.com/kishikawakatsumi/KeychainAccess
+	insteadOf = git@github.com:kishikawakatsumi/KeychainAccess.git
+	insteadOf = git@github.com:kishikawakatsumi/KeychainAccess
+[url "file:///Users/hans/mirror/github.com/krzyzanowskim/CryptoSwift.git"]
+	insteadOf = https://github.com/krzyzanowskim/CryptoSwift.git
+	insteadOf = https://github.com/krzyzanowskim/CryptoSwift
+	insteadOf = git@github.com:krzyzanowskim/CryptoSwift.git
+	insteadOf = git@github.com:krzyzanowskim/CryptoSwift
+[url "file:///Users/hans/mirror/github.com/mattgallagher/CwlCatchException.git"]
+	insteadOf = https://github.com/mattgallagher/CwlCatchException.git
+	insteadOf = https://github.com/mattgallagher/CwlCatchException
+	insteadOf = git@github.com:mattgallagher/CwlCatchException.git
+	insteadOf = git@github.com:mattgallagher/CwlCatchException
+[url "file:///Users/hans/mirror/github.com/mattgallagher/CwlPreconditionTesting.git"]
+	insteadOf = https://github.com/mattgallagher/CwlPreconditionTesting.git
+	insteadOf = https://github.com/mattgallagher/CwlPreconditionTesting
+	insteadOf = git@github.com:mattgallagher/CwlPreconditionTesting.git
+	insteadOf = git@github.com:mattgallagher/CwlPreconditionTesting
+[url "file:///Users/hans/mirror/github.com/mattt/InflectorKit.git"]
+	insteadOf = https://github.com/mattt/InflectorKit.git
+	insteadOf = https://github.com/mattt/InflectorKit
+	insteadOf = git@github.com:mattt/InflectorKit.git
+	insteadOf = git@github.com:mattt/InflectorKit
+[url "file:///Users/hans/mirror/github.com/minsoe/Localize.git"]
+	insteadOf = https://github.com/minsoe/Localize.git
+	insteadOf = https://github.com/minsoe/Localize
+	insteadOf = git@github.com:minsoe/Localize.git
+	insteadOf = git@github.com:minsoe/Localize
+[url "file:///Users/hans/mirror/github.com/mo5tone/netfox.git"]
+	insteadOf = https://github.com/mo5tone/netfox.git
+	insteadOf = https://github.com/mo5tone/netfox
+	insteadOf = git@github.com:mo5tone/netfox.git
+	insteadOf = git@github.com:mo5tone/netfox
+[url "file:///Users/hans/mirror/github.com/onevcat/Kingfisher.git"]
+	insteadOf = https://github.com/onevcat/Kingfisher.git
+	insteadOf = https://github.com/onevcat/Kingfisher
+	insteadOf = git@github.com:onevcat/Kingfisher.git
+	insteadOf = git@github.com:onevcat/Kingfisher
+[url "file:///Users/hans/mirror/github.com/pointfreeco/combine-schedulers.git"]
+	insteadOf = https://github.com/pointfreeco/combine-schedulers.git
+	insteadOf = https://github.com/pointfreeco/combine-schedulers
+	insteadOf = git@github.com:pointfreeco/combine-schedulers.git
+	insteadOf = git@github.com:pointfreeco/combine-schedulers
+[url "file:///Users/hans/mirror/github.com/pointfreeco/swift-clocks.git"]
+	insteadOf = https://github.com/pointfreeco/swift-clocks.git
+	insteadOf = https://github.com/pointfreeco/swift-clocks
+	insteadOf = git@github.com:pointfreeco/swift-clocks.git
+	insteadOf = git@github.com:pointfreeco/swift-clocks
+[url "file:///Users/hans/mirror/github.com/pointfreeco/swift-concurrency-extras.git"]
+	insteadOf = https://github.com/pointfreeco/swift-concurrency-extras.git
+	insteadOf = https://github.com/pointfreeco/swift-concurrency-extras
+	insteadOf = git@github.com:pointfreeco/swift-concurrency-extras.git
+	insteadOf = git@github.com:pointfreeco/swift-concurrency-extras
+[url "file:///Users/hans/mirror/github.com/pointfreeco/swift-macro-testing.git"]
+	insteadOf = https://github.com/pointfreeco/swift-macro-testing.git
+	insteadOf = https://github.com/pointfreeco/swift-macro-testing
+	insteadOf = git@github.com:pointfreeco/swift-macro-testing.git
+	insteadOf = git@github.com:pointfreeco/swift-macro-testing
+[url "file:///Users/hans/mirror/github.com/pointfreeco/swift-snapshot-testing.git"]
+	insteadOf = https://github.com/pointfreeco/swift-snapshot-testing.git
+	insteadOf = https://github.com/pointfreeco/swift-snapshot-testing
+	insteadOf = git@github.com:pointfreeco/swift-snapshot-testing.git
+	insteadOf = git@github.com:pointfreeco/swift-snapshot-testing
+[url "file:///Users/hans/mirror/github.com/pointfreeco/xctest-dynamic-overlay.git"]
+	insteadOf = https://github.com/pointfreeco/xctest-dynamic-overlay.git
+	insteadOf = https://github.com/pointfreeco/xctest-dynamic-overlay
+	insteadOf = git@github.com:pointfreeco/xctest-dynamic-overlay.git
+	insteadOf = git@github.com:pointfreeco/xctest-dynamic-overlay
+[url "file:///Users/hans/mirror/github.com/scinfu/SwiftSoup.git"]
+	insteadOf = https://github.com/scinfu/SwiftSoup.git
+	insteadOf = https://github.com/scinfu/SwiftSoup
+	insteadOf = git@github.com:scinfu/SwiftSoup.git
+	insteadOf = git@github.com:scinfu/SwiftSoup
+[url "file:///Users/hans/mirror/github.com/siteline/swiftui-introspect.git"]
+	insteadOf = https://github.com/siteline/swiftui-introspect.git
+	insteadOf = https://github.com/siteline/swiftui-introspect
+	insteadOf = git@github.com:siteline/swiftui-introspect.git
+	insteadOf = git@github.com:siteline/swiftui-introspect
+[url "file:///Users/hans/mirror/github.com/stephencelis/SQLite.swift.git"]
+	insteadOf = https://github.com/stephencelis/SQLite.swift.git
+	insteadOf = https://github.com/stephencelis/SQLite.swift
+	insteadOf = git@github.com:stephencelis/SQLite.swift.git
+	insteadOf = git@github.com:stephencelis/SQLite.swift
+[url "file:///Users/hans/mirror/github.com/sunshinejr/SwiftyUserDefaults.git"]
+	insteadOf = https://github.com/sunshinejr/SwiftyUserDefaults.git
+	insteadOf = https://github.com/sunshinejr/SwiftyUserDefaults
+	insteadOf = git@github.com:sunshinejr/SwiftyUserDefaults.git
+	insteadOf = git@github.com:sunshinejr/SwiftyUserDefaults
+[url "file:///Users/hans/mirror/github.com/swiftlang/swift-syntax.git"]
+	insteadOf = https://github.com/swiftlang/swift-syntax.git
+	insteadOf = https://github.com/swiftlang/swift-syntax
+	insteadOf = git@github.com:swiftlang/swift-syntax.git
+	insteadOf = git@github.com:swiftlang/swift-syntax
+[url "file:///Users/hans/mirror/github.com/swiftwasm/carton.git"]
+	insteadOf = https://github.com/swiftwasm/carton.git
+	insteadOf = https://github.com/swiftwasm/carton
+	insteadOf = git@github.com:swiftwasm/carton.git
+	insteadOf = git@github.com:swiftwasm/carton
