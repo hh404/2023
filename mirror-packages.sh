@@ -44,7 +44,7 @@ def parse_repo(u: str):
     m = re.match(r'^[^@]+@([^:]+):([^/]+)/(.+?)(?:\.git)?$', u0)
     if m:
         host, org, repo = m.group(1), m.group(2), m.group(3)
-        https_without = f"https://{host}/{org}/{repo}"
+        https_without = "https://" + host + "/" + org + "/" + repo
         https_with = https_without + ".git"
         return host, org, repo, https_with, https_without, u0
 
@@ -58,7 +58,7 @@ def parse_repo(u: str):
             repo = parts[1]
             if repo.endswith(".git"):
                 repo = repo[:-4]
-            https_without = f"https://{host}/{org}/{repo}"
+            https_without = "https://" + host + "/" + org + "/" + repo
             https_with = https_without + ".git"
             return host, org, repo, https_with, https_without, u0
 
@@ -116,6 +116,7 @@ state = load_state()
 open(failed_file, "w", encoding="utf-8").close()
 
 total = len(urls)
+successful_mirrors = []  # 全部下载完成后统一写 git config insteadOf
 for idx, u in enumerate(urls, 1):
     if not isinstance(u, str) or not u.strip():
         continue
@@ -125,10 +126,8 @@ for idx, u in enumerate(urls, 1):
     if info:
         host, org, repo, https_with, https_without, original = info
         dst_dir = os.path.join(mirror_root, host, org, repo + ".git")
-        file_prefix = "file://" + os.path.join(mirror_root, host, org, repo + ".git")
     else:
         dst_dir = os.path.join(mirror_root, "_unknown", safe_path_component(u) + ".git")
-        file_prefix = "file://" + dst_dir
 
     os.makedirs(os.path.dirname(dst_dir), exist_ok=True)
 
@@ -148,24 +147,22 @@ for idx, u in enumerate(urls, 1):
             run(["git", "clone", "--mirror", u, dst_dir])
             status = "success"
 
-        # mirror 成功后，写入 git config（去重）
-        if info:
-            # 同时覆盖 .git / 无 .git 两种写法
-            git_config_add_insteadOf(file_prefix, https_with)
-            git_config_add_insteadOf(file_prefix, https_without)
-
-            # 兼容 SSH 形式（常见）
-            ssh1 = f"git@{host}:{org}/{repo}.git"
-            ssh2 = f"git@{host}:{org}/{repo}"
-            git_config_add_insteadOf(file_prefix, ssh1)
-            git_config_add_insteadOf(file_prefix, ssh2)
-
         state[u] = {
             "status": status,
             "dst": dst_dir,
             "updatedAt": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
         }
         save_state(state)
+
+        if info:
+            successful_mirrors.append({
+                "host": host,
+                "org": org,
+                "repo": repo,
+                "dst": dst_dir,
+                "https_with": https_with,
+                "https_without": https_without,
+            })
 
     except Exception as e:
         print(f"FAILED: {u}\n  reason: {e}")
@@ -179,6 +176,18 @@ for idx, u in enumerate(urls, 1):
         save_state(state)
         # 不终止整批：继续下一个
         continue
+
+# === 全部 mirror 完成后，统一写入 git config insteadOf（去重） ===
+if successful_mirrors:
+    print(f"\nConfiguring git insteadOf for {len(successful_mirrors)} mirrors...")
+    for m in successful_mirrors:
+        file_prefix = "file://" + m["dst"]
+        # 同时覆盖 .git / 无 .git 两种 HTTPS 写法
+        git_config_add_insteadOf(file_prefix, m["https_with"])
+        git_config_add_insteadOf(file_prefix, m["https_without"])
+        # 兼容 SSH 形式（常见）
+        git_config_add_insteadOf(file_prefix, f'git@{m["host"]}:{m["org"]}/{m["repo"]}.git')
+        git_config_add_insteadOf(file_prefix, f'git@{m["host"]}:{m["org"]}/{m["repo"]}')
 
 print("\nDone.")
 print(f"State: {state_file}")
