@@ -388,3 +388,38 @@
 	insteadOf = https://github.com/pointfreeco/swift-dependencies
 	insteadOf = git@github.com:pointfreeco/swift-dependencies.git
 	insteadOf = git@github.com:pointfreeco/swift-dependencies
+[url "file:///Users/hans/mirror/github.com/kylef/PathKit.git"]
+	insteadOf = https://github.com/kylef/PathKit.git
+	insteadOf = https://github.com/kylef/PathKit
+	insteadOf = git@github.com:kylef/PathKit.git
+	insteadOf = git@github.com:kylef/PathKit
+[url "file:///Users/hans/mirror/github.com/marmelroy/Localize-Swift.git"]
+	insteadOf = https://github.com/marmelroy/Localize-Swift.git
+	insteadOf = https://github.com/marmelroy/Localize-Swift
+	insteadOf = git@github.com:marmelroy/Localize-Swift.git
+	insteadOf = git@github.com:marmelroy/Localize-Swift
+[url "file:///Users/hans/mirror/github.com/AFNetworking/AFNetworking.git"]
+	insteadOf = https://github.com/AFNetworking/AFNetworking.git
+	insteadOf = https://github.com/AFNetworking/AFNetworking
+	insteadOf = git@github.com:AFNetworking/AFNetworking.git
+	insteadOf = git@github.com:AFNetworking/AFNetworking
+[url "file:///Users/hans/mirror/github.com/AppsFlyerSDK/AppsFlyerFramework.git"]
+	insteadOf = https://github.com/AppsFlyerSDK/AppsFlyerFramework.git
+	insteadOf = https://github.com/AppsFlyerSDK/AppsFlyerFramework
+	insteadOf = git@github.com:AppsFlyerSDK/AppsFlyerFramework.git
+	insteadOf = git@github.com:AppsFlyerSDK/AppsFlyerFramework
+[url "file:///Users/hans/mirror/github.com/Swinject/Swinject.git"]
+	insteadOf = https://github.com/Swinject/Swinject.git
+	insteadOf = https://github.com/Swinject/Swinject
+	insteadOf = git@github.com:Swinject/Swinject.git
+	insteadOf = git@github.com:Swinject/Swinject
+[url "file:///Users/hans/mirror/github.com/SVGKit/SVGKit.git"]
+	insteadOf = https://github.com/SVGKit/SVGKit.git
+	insteadOf = https://github.com/SVGKit/SVGKit
+	insteadOf = git@github.com:SVGKit/SVGKit.git
+	insteadOf = git@github.com:SVGKit/SVGKit
+[url "file:///Users/hans/mirror/github.com/tuist/tuist.git"]
+	insteadOf = https://github.com/tuist/tuist.git
+	insteadOf = https://github.com/tuist/tuist
+	insteadOf = git@github.com:tuist/tuist.git
+	insteadOf = git@github.com:tuist/tuist
