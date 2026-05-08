@@ -303,3 +303,88 @@
 	insteadOf = https://github.com/swiftwasm/carton
 	insteadOf = git@github.com:swiftwasm/carton.git
 	insteadOf = git@github.com:swiftwasm/carton
+[url "file:///Users/hans/mirror/github.com/Brightify/Cuckoo.git"]
+	insteadOf = https://github.com/Brightify/Cuckoo.git
+	insteadOf = https://github.com/Brightify/Cuckoo
+	insteadOf = git@github.com:Brightify/Cuckoo.git
+	insteadOf = git@github.com:Brightify/Cuckoo
+[url "file:///Users/hans/mirror/github.com/Kolos65/Mockable.git"]
+	insteadOf = https://github.com/Kolos65/Mockable.git
+	insteadOf = https://github.com/Kolos65/Mockable
+	insteadOf = git@github.com:Kolos65/Mockable.git
+	insteadOf = git@github.com:Kolos65/Mockable
+[url "file:///Users/hans/mirror/github.com/SwiftGen/SwiftGenPlugin.git"]
+	insteadOf = https://github.com/SwiftGen/SwiftGenPlugin.git
+	insteadOf = https://github.com/SwiftGen/SwiftGenPlugin
+	insteadOf = git@github.com:SwiftGen/SwiftGenPlugin.git
+	insteadOf = git@github.com:SwiftGen/SwiftGenPlugin
+[url "file:///Users/hans/mirror/github.com/SwiftyLab/MetaCodable.git"]
+	insteadOf = https://github.com/SwiftyLab/MetaCodable.git
+	insteadOf = https://github.com/SwiftyLab/MetaCodable
+	insteadOf = git@github.com:SwiftyLab/MetaCodable.git
+	insteadOf = git@github.com:SwiftyLab/MetaCodable
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-analytics-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-analytics-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-analytics-ios
+	insteadOf = git@github.com:adobe/aepsdk-analytics-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-analytics-ios
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-assurance-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-assurance-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-assurance-ios
+	insteadOf = git@github.com:adobe/aepsdk-assurance-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-assurance-ios
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-campaignclassic-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-campaignclassic-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-campaignclassic-ios
+	insteadOf = git@github.com:adobe/aepsdk-campaignclassic-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-campaignclassic-ios
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-edge-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-edge-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-edge-ios
+	insteadOf = git@github.com:adobe/aepsdk-edge-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-edge-ios
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-ui-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-ui-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-ui-ios
+	insteadOf = git@github.com:adobe/aepsdk-ui-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-ui-ios
+[url "file:///Users/hans/mirror/github.com/adobe/aepsdk-userprofile-ios.git"]
+	insteadOf = https://github.com/adobe/aepsdk-userprofile-ios.git
+	insteadOf = https://github.com/adobe/aepsdk-userprofile-ios
+	insteadOf = git@github.com:adobe/aepsdk-userprofile-ios.git
+	insteadOf = git@github.com:adobe/aepsdk-userprofile-ios
+[url "file:///Users/hans/mirror/github.com/ekazaev/route-composer.git"]
+	insteadOf = https://github.com/ekazaev/route-composer.git
+	insteadOf = https://github.com/ekazaev/route-composer
+	insteadOf = git@github.com:ekazaev/route-composer.git
+	insteadOf = git@github.com:ekazaev/route-composer
+[url "file:///Users/hans/mirror/github.com/firebase/firebase-ios-sdk.git"]
+	insteadOf = https://github.com/firebase/firebase-ios-sdk.git
+	insteadOf = https://github.com/firebase/firebase-ios-sdk
+	insteadOf = git@github.com:firebase/firebase-ios-sdk.git
+	insteadOf = git@github.com:firebase/firebase-ios-sdk
+[url "file:///Users/hans/mirror/github.com/johnpatrickmorgan/FlowStacks.git"]
+	insteadOf = https://github.com/johnpatrickmorgan/FlowStacks.git
+	insteadOf = https://github.com/johnpatrickmorgan/FlowStacks
+	insteadOf = git@github.com:johnpatrickmorgan/FlowStacks.git
+	insteadOf = git@github.com:johnpatrickmorgan/FlowStacks
+[url "file:///Users/hans/mirror/github.com/nalexn/ViewInspector.git"]
+	insteadOf = https://github.com/nalexn/ViewInspector.git
+	insteadOf = https://github.com/nalexn/ViewInspector
+	insteadOf = git@github.com:nalexn/ViewInspector.git
+	insteadOf = git@github.com:nalexn/ViewInspector
+[url "file:///Users/hans/mirror/github.com/onevcat/Rainbow.git"]
+	insteadOf = https://github.com/onevcat/Rainbow.git
+	insteadOf = https://github.com/onevcat/Rainbow
+	insteadOf = git@github.com:onevcat/Rainbow.git
+	insteadOf = git@github.com:onevcat/Rainbow
+[url "file:///Users/hans/mirror/github.com/openid/AppAuth-iOS.git"]
+	insteadOf = https://github.com/openid/AppAuth-iOS.git
+	insteadOf = https://github.com/openid/AppAuth-iOS
+	insteadOf = git@github.com:openid/AppAuth-iOS.git
+	insteadOf = git@github.com:openid/AppAuth-iOS
+[url "file:///Users/hans/mirror/github.com/pointfreeco/swift-dependencies.git"]
+	insteadOf = https://github.com/pointfreeco/swift-dependencies.git
+	insteadOf = https://github.com/pointfreeco/swift-dependencies
+	insteadOf = git@github.com:pointfreeco/swift-dependencies.git
+	insteadOf = git@github.com:pointfreeco/swift-dependencies
