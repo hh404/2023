@@ -2,13 +2,25 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>DB Column Picker</title>
+<title>DB Tools</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
   h2 { color: #9cdcfe; margin-bottom: 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 2px; margin-bottom: 20px; border-bottom: 1px solid #3c3c3c; }
+  .tab {
+    padding: 8px 20px; cursor: pointer; font-size: 13px; color: #858585;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  }
+  .tab:hover { color: #d4d4d4; }
+  .tab.active { color: #9cdcfe; border-bottom-color: #007acc; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
   textarea {
-    width: 100%; height: 120px; background: #252526; color: #d4d4d4;
+    width: 100%; background: #252526; color: #d4d4d4;
     border: 1px solid #3c3c3c; border-radius: 4px; padding: 10px;
     font-family: monospace; font-size: 13px; resize: vertical;
   }
@@ -21,8 +33,9 @@
   button.secondary { background: #3c3c3c; }
   button.secondary:hover { background: #505050; }
   button.copied { background: #4caf50; }
+  button.danger { background: #7a1f1f; }
+  button.danger:hover { background: #9a2f2f; }
 
-  #columns-area { display: none; margin-top: 16px; }
   .toolbar { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
   .search-box {
     flex: 1; background: #252526; color: #d4d4d4;
@@ -31,9 +44,10 @@
   }
   .search-box:focus { outline: none; border-color: #007acc; }
 
+  /* Column picker */
   #col-list {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 4px; max-height: 260px; overflow-y: auto;
+    gap: 4px; max-height: 240px; overflow-y: auto;
     background: #252526; border: 1px solid #3c3c3c; border-radius: 4px; padding: 10px;
   }
   .col-item {
@@ -46,9 +60,8 @@
   .col-item.duplicate label { color: #dcdcaa; }
   .col-item.hidden { display: none; }
 
-  #output-area { display: none; margin-top: 16px; }
   .output-block { margin-bottom: 12px; }
-  .output-block label { font-size: 12px; color: #858585; display: block; margin-bottom: 4px; }
+  .output-block > label { font-size: 12px; color: #858585; display: block; margin-bottom: 4px; }
   .output-row { display: flex; gap: 8px; align-items: flex-start; }
   .output-box {
     flex: 1; background: #252526; border: 1px solid #3c3c3c; border-radius: 3px;
@@ -57,74 +70,140 @@
   }
   .count { color: #858585; font-size: 12px; margin-left: auto; }
   hr { border: none; border-top: 1px solid #3c3c3c; margin: 16px 0; }
+  .hidden-area { display: none; }
+
+  /* Result merger */
+  .paste-zone {
+    border: 1px dashed #3c3c3c; border-radius: 4px; padding: 12px;
+    margin-bottom: 8px; position: relative;
+  }
+  .paste-zone .paste-label {
+    font-size: 11px; color: #858585; margin-bottom: 6px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .add-btn-row { margin: 8px 0; }
+
+  /* Merged table */
+  #merged-table-wrap {
+    overflow-x: auto; margin-top: 12px;
+    border: 1px solid #3c3c3c; border-radius: 4px;
+  }
+  table { border-collapse: collapse; width: 100%; font-size: 12px; }
+  th {
+    background: #252526; color: #9cdcfe; text-align: left;
+    padding: 6px 10px; border-bottom: 1px solid #3c3c3c;
+    white-space: nowrap; position: sticky; top: 0;
+  }
+  td { padding: 5px 10px; border-bottom: 1px solid #2a2a2a; color: #d4d4d4; white-space: nowrap; }
+  tr:hover td { background: #2a2d2e; }
+  tr.dup-row td { color: #858585; }
+  .badge {
+    display: inline-block; font-size: 10px; padding: 1px 5px;
+    border-radius: 10px; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.dup { background: #5a3e1b; color: #dcdcaa; }
+  .table-actions { display: flex; gap: 8px; margin-top: 10px; align-items: center; }
+  .info { font-size: 12px; color: #858585; }
 </style>
 </head>
 <body>
 
-<h2>DB Column Picker</h2>
-<p style="color:#858585;font-size:12px;margin-bottom:12px;">从 DBeaver 复制结果粘贴进来，勾选需要的列，一键生成 SQL</p>
-
-<textarea id="raw-input" placeholder="粘贴 DBeaver 查询结果（包含列名行和分隔行都没关系）..."></textarea>
-<div style="display:flex;gap:8px;margin-top:8px;">
-  <button onclick="parse()">解析列名</button>
-  <button class="secondary" onclick="clearAll()">清空</button>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('picker')">列选择器</div>
+  <div class="tab" onclick="switchTab('merger')">结果合并</div>
 </div>
 
-<div id="columns-area">
-  <hr>
-  <h2>选择列 <span id="sel-count" class="count"></span></h2>
-  <div class="toolbar">
-    <input class="search-box" id="search" placeholder="搜索列名..." oninput="filterCols()">
-    <button class="secondary" onclick="selectAll()">全选</button>
-    <button class="secondary" onclick="selectNone()">全不选</button>
+<!-- ═══════════ TAB 1: Column Picker ═══════════ -->
+<div id="tab-picker" class="panel active">
+  <p style="color:#858585;font-size:12px;margin-bottom:12px;">粘贴 DBeaver 查询结果，勾选需要的列，生成 SQL</p>
+  <textarea id="raw-input" style="height:110px" placeholder="粘贴 DBeaver 查询结果..."></textarea>
+  <div style="display:flex;gap:8px;margin-top:8px;">
+    <button onclick="parse()">解析列名</button>
+    <button class="secondary" onclick="clearAll()">清空</button>
   </div>
-  <div id="col-list"></div>
+
+  <div id="columns-area" class="hidden-area">
+    <hr>
+    <h2>选择列 <span id="sel-count" class="count"></span></h2>
+    <div class="toolbar">
+      <input class="search-box" id="search" placeholder="搜索列名..." oninput="filterCols()">
+      <button class="secondary" onclick="selectAll()">全选</button>
+      <button class="secondary" onclick="selectNone()">全不选</button>
+    </div>
+    <div id="col-list"></div>
+  </div>
+
+  <div id="output-area" class="hidden-area">
+    <hr>
+    <h2>输出</h2>
+    <div class="output-block">
+      <label>列名列表</label>
+      <div class="output-row">
+        <div class="output-box" id="out-cols"></div>
+        <button onclick="copyText('out-cols', this)">复制</button>
+      </div>
+    </div>
+    <div class="output-block">
+      <label>完整 SELECT 语句</label>
+      <div class="output-row">
+        <div class="output-box" id="out-sql"></div>
+        <button onclick="copyText('out-sql', this)">复制</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div id="output-area">
-  <hr>
-  <h2>输出</h2>
-  <div class="output-block">
-    <label>列名列表</label>
-    <div class="output-row">
-      <div class="output-box" id="out-cols"></div>
-      <button onclick="copyText('out-cols', this)">复制</button>
-    </div>
+<!-- ═══════════ TAB 2: Result Merger ═══════════ -->
+<div id="tab-merger" class="panel">
+  <p style="color:#858585;font-size:12px;margin-bottom:12px;">粘贴同一张表的多次查询结果，自动合并去重，整理成一张干净的表</p>
+
+  <div id="paste-list"></div>
+
+  <div class="add-btn-row">
+    <button class="secondary" onclick="addPasteZone()">+ 添加一份结果</button>
   </div>
-  <div class="output-block">
-    <label>完整 SELECT 语句</label>
-    <div class="output-row">
-      <div class="output-box" id="out-sql"></div>
-      <button onclick="copyText('out-sql', this)">复制</button>
+
+  <div style="display:flex;gap:8px;margin-top:4px;">
+    <button onclick="mergeResults()">合并</button>
+    <button class="secondary" onclick="resetMerger()">重置</button>
+    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#858585;cursor:pointer;">
+      <input type="checkbox" id="dedup-check" checked style="accent-color:#007acc"> 自动去重
+    </label>
+  </div>
+
+  <div id="merge-output" class="hidden-area">
+    <hr>
+    <div class="table-actions">
+      <h2 style="margin:0">合并结果 <span id="merge-count" class="count"></span></h2>
+      <button onclick="copyTableTSV()" style="margin-left:auto">复制为 TSV</button>
+      <button class="secondary" onclick="copyTableCSV()">复制为 CSV</button>
     </div>
+    <div id="merged-table-wrap" style="max-height:400px;overflow-y:auto;margin-top:8px;"></div>
   </div>
 </div>
 
 <script>
+// ─── Tab switching ───
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['picker','merger'][i] === name);
+  });
+  document.getElementById('tab-picker').classList.toggle('active', name === 'picker');
+  document.getElementById('tab-merger').classList.toggle('active', name === 'merger');
+}
+
+// ─── Column Picker ───
 let allCols = [];
 
 function parse() {
   const raw = document.getElementById('raw-input').value.trim();
   if (!raw) return;
+  const result = parseBlock(raw);
+  if (!result) { alert('没找到列名行，请确认格式包含 | 分隔符'); return; }
 
-  const lines = raw.split('\n');
-  // 找第一行（列名行）：包含 | 且不是纯 - 和 + 的行
-  const headerLine = lines.find(l => l.includes('|') && !/^[\s\-\+]+$/.test(l));
-  if (!headerLine) { alert('没找到列名行，请确认格式包含 | 分隔符'); return; }
-
-  const cols = headerLine.split('|')
-    .map(c => c.trim())
-    .filter(c => c.length > 0);
-
-  if (cols.length === 0) { alert('解析出0列，请检查格式'); return; }
-
-  // 标记重复列名
+  const cols = result.headers;
   const seen = {};
-  allCols = cols.map((name, i) => {
-    const count = (seen[name] = (seen[name] || 0) + 1);
-    return { name, index: i, duplicate: false, displayName: name, _count: count };
-  });
-  // 第二遍：标记重复
+  allCols = cols.map((name, i) => ({ name, index: i, duplicate: false, displayName: name }));
   const nameCount = {};
   allCols.forEach(c => nameCount[c.name] = (nameCount[c.name] || 0) + 1);
   let dupIdx = {};
@@ -153,9 +232,7 @@ function renderCols() {
       <label for="cb${i}">${col.displayName}</label>`;
     div.addEventListener('click', e => {
       if (e.target.tagName !== 'INPUT') {
-        const cb = div.querySelector('input');
-        cb.checked = !cb.checked;
-        updateOutput();
+        const cb = div.querySelector('input'); cb.checked = !cb.checked; updateOutput();
       }
     });
     list.appendChild(div);
@@ -171,45 +248,26 @@ function filterCols() {
   });
 }
 
-function selectAll() {
-  document.querySelectorAll('#col-list input').forEach(cb => cb.checked = true);
-  updateOutput();
-}
-
-function selectNone() {
-  document.querySelectorAll('#col-list input').forEach(cb => cb.checked = false);
-  updateOutput();
-}
+function selectAll() { document.querySelectorAll('#col-list input').forEach(cb => cb.checked = true); updateOutput(); }
+function selectNone() { document.querySelectorAll('#col-list input').forEach(cb => cb.checked = false); updateOutput(); }
 
 function updateOutput() {
   const selected = [];
-  document.querySelectorAll('#col-list input').forEach((cb, i) => {
-    if (cb.checked) selected.push(allCols[i].name);
-  });
-
-  const colList = selected.join(', ');
-  const sqlStmt = selected.length > 0
-    ? `SELECT\n  ${selected.join(',\n  ')}\nFROM {TABLE}\nWHERE {CONDITION}`
-    : '';
-
-  document.getElementById('out-cols').textContent = colList || '（未选择任何列）';
-  document.getElementById('out-sql').textContent = sqlStmt || '（未选择任何列）';
+  document.querySelectorAll('#col-list input').forEach((cb, i) => { if (cb.checked) selected.push(allCols[i].name); });
+  document.getElementById('out-cols').textContent = selected.length ? selected.join(', ') : '（未选择任何列）';
+  document.getElementById('out-sql').textContent = selected.length
+    ? `SELECT\n  ${selected.join(',\n  ')}\nFROM {TABLE}\nWHERE {CONDITION}` : '（未选择任何列）';
   updateSelCount(selected.length);
 }
 
 function updateSelCount(n) {
-  if (n === undefined) {
-    n = document.querySelectorAll('#col-list input:checked').length;
-  }
+  if (n === undefined) n = document.querySelectorAll('#col-list input:checked').length;
   document.getElementById('sel-count').textContent = `${n} / ${allCols.length} 列已选`;
 }
 
 function copyText(id, btn) {
-  const text = document.getElementById(id).textContent;
-  navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.textContent;
-    btn.textContent = '已复制!';
-    btn.classList.add('copied');
+  navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => {
+    const orig = btn.textContent; btn.textContent = '已复制!'; btn.classList.add('copied');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
   });
 }
@@ -221,6 +279,147 @@ function clearAll() {
   document.getElementById('output-area').style.display = 'none';
   allCols = [];
 }
+
+// ─── Shared parser ───
+function parseBlock(text) {
+  const lines = text.split('\n').map(l => l.trimEnd());
+  const headerLine = lines.find(l => l.includes('|') && !/^[\s\-\+]+$/.test(l));
+  if (!headerLine) return null;
+
+  const headers = headerLine.split('|').map(c => c.trim()).filter(c => c.length > 0);
+
+  const rows = [];
+  let pastSep = false;
+  for (const line of lines) {
+    if (!pastSep) {
+      if (/^[\s\-\+]+$/.test(line) && line.includes('-')) { pastSep = true; continue; }
+      continue;
+    }
+    if (!line.includes('|')) continue;
+    const cells = line.split('|').map(c => c.trim()).filter((_, i, a) => {
+      // keep cells matching header count (trim leading/trailing empty from split)
+      return true;
+    });
+    // re-split properly: split by | and take middle values
+    const parts = line.split('|');
+    // leading empty if line starts with non-|, else first cell after first |
+    const vals = parts.map(p => p.trim());
+    // remove leading/trailing empty strings caused by leading/trailing |
+    while (vals.length > 0 && vals[0] === '') vals.shift();
+    while (vals.length > 0 && vals[vals.length-1] === '') vals.pop();
+    if (vals.length > 0) rows.push(vals);
+  }
+
+  return { headers, rows };
+}
+
+// ─── Result Merger ───
+let pasteCount = 0;
+let mergedHeaders = [];
+let mergedRows = [];
+
+function addPasteZone() {
+  pasteCount++;
+  const id = `paste-${pasteCount}`;
+  const div = document.createElement('div');
+  div.className = 'paste-zone';
+  div.id = id;
+  div.innerHTML = `
+    <div class="paste-label">
+      <span>结果 ${pasteCount}</span>
+      <button class="danger" style="padding:2px 8px;font-size:11px" onclick="removePaste('${id}')">删除</button>
+    </div>
+    <textarea style="height:90px" placeholder="粘贴第 ${pasteCount} 份查询结果..."></textarea>`;
+  document.getElementById('paste-list').appendChild(div);
+}
+
+function removePaste(id) {
+  document.getElementById(id)?.remove();
+}
+
+function resetMerger() {
+  document.getElementById('paste-list').innerHTML = '';
+  document.getElementById('merge-output').style.display = 'none';
+  pasteCount = 0;
+  mergedHeaders = [];
+  mergedRows = [];
+  addPasteZone();
+  addPasteZone();
+}
+
+function mergeResults() {
+  const zones = document.querySelectorAll('#paste-list .paste-zone');
+  const allBlocks = [];
+
+  zones.forEach(zone => {
+    const text = zone.querySelector('textarea').value.trim();
+    if (!text) return;
+    const parsed = parseBlock(text);
+    if (parsed) allBlocks.push(parsed);
+  });
+
+  if (allBlocks.length === 0) { alert('没有可解析的内容'); return; }
+
+  // Use first block's headers as canonical
+  mergedHeaders = allBlocks[0].headers;
+  const dedup = document.getElementById('dedup-check').checked;
+  const seen = new Set();
+  mergedRows = [];
+
+  allBlocks.forEach(block => {
+    block.rows.forEach(row => {
+      // Pad or trim row to match header count
+      const normalised = mergedHeaders.map((_, i) => row[i] ?? '');
+      const key = normalised.join('\0');
+      const isDup = seen.has(key);
+      if (!isDup) seen.add(key);
+      if (!isDup || !dedup) {
+        mergedRows.push({ cells: normalised, dup: isDup });
+      }
+    });
+  });
+
+  renderMergedTable();
+  document.getElementById('merge-output').style.display = 'block';
+}
+
+function renderMergedTable() {
+  const dupCount = mergedRows.filter(r => r.dup).length;
+  const shown = mergedRows.filter(r => !r.dup).length;
+  document.getElementById('merge-count').textContent =
+    `${shown} 行` + (dupCount > 0 ? `（已去除 ${dupCount} 条重复）` : '');
+
+  const wrap = document.getElementById('merged-table-wrap');
+  const thead = `<thead><tr>${mergedHeaders.map(h => `<th>${h}</th>`).join('')}</tr></thead>`;
+  const tbody = mergedRows.map(r =>
+    `<tr class="${r.dup ? 'dup-row' : ''}">
+      ${r.cells.map((c, i) => `<td>${c || '<span style="color:#555">—</span>'}</td>`).join('')}
+    </tr>`
+  ).join('');
+  wrap.innerHTML = `<table>${thead}<tbody>${tbody}</tbody></table>`;
+}
+
+function copyTableTSV() {
+  const lines = [mergedHeaders.join('\t'), ...mergedRows.filter(r=>!r.dup).map(r => r.cells.join('\t'))];
+  copyRaw(lines.join('\n'));
+}
+
+function copyTableCSV() {
+  const escape = v => `"${v.replace(/"/g,'""')}"`;
+  const lines = [mergedHeaders.map(escape).join(','), ...mergedRows.filter(r=>!r.dup).map(r => r.cells.map(escape).join(','))];
+  copyRaw(lines.join('\n'));
+}
+
+function copyRaw(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const btns = document.querySelectorAll('.table-actions button');
+    btns.forEach(b => { b.classList.add('copied'); setTimeout(() => b.classList.remove('copied'), 1500); });
+  });
+}
+
+// Init merger with 2 zones
+addPasteZone();
+addPasteZone();
 </script>
 </body>
 </html>
