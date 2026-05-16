@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>DB Column Picker</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+  h2 { color: #9cdcfe; margin-bottom: 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+  textarea {
+    width: 100%; height: 120px; background: #252526; color: #d4d4d4;
+    border: 1px solid #3c3c3c; border-radius: 4px; padding: 10px;
+    font-family: monospace; font-size: 13px; resize: vertical;
+  }
+  textarea:focus { outline: none; border-color: #007acc; }
+  button {
+    background: #007acc; color: white; border: none; padding: 6px 16px;
+    border-radius: 3px; cursor: pointer; font-size: 13px; font-family: monospace;
+  }
+  button:hover { background: #005f9e; }
+  button.secondary { background: #3c3c3c; }
+  button.secondary:hover { background: #505050; }
+  button.copied { background: #4caf50; }
+
+  #columns-area { display: none; margin-top: 16px; }
+  .toolbar { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
+  .search-box {
+    flex: 1; background: #252526; color: #d4d4d4;
+    border: 1px solid #3c3c3c; border-radius: 3px; padding: 5px 10px;
+    font-family: monospace; font-size: 13px;
+  }
+  .search-box:focus { outline: none; border-color: #007acc; }
+
+  #col-list {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 4px; max-height: 260px; overflow-y: auto;
+    background: #252526; border: 1px solid #3c3c3c; border-radius: 4px; padding: 10px;
+  }
+  .col-item {
+    display: flex; align-items: center; gap: 6px; padding: 4px 6px;
+    border-radius: 3px; cursor: pointer; user-select: none;
+  }
+  .col-item:hover { background: #2a2d2e; }
+  .col-item input { cursor: pointer; accent-color: #007acc; }
+  .col-item label { cursor: pointer; font-size: 13px; color: #ce9178; }
+  .col-item.duplicate label { color: #dcdcaa; }
+  .col-item.hidden { display: none; }
+
+  #output-area { display: none; margin-top: 16px; }
+  .output-block { margin-bottom: 12px; }
+  .output-block label { font-size: 12px; color: #858585; display: block; margin-bottom: 4px; }
+  .output-row { display: flex; gap: 8px; align-items: flex-start; }
+  .output-box {
+    flex: 1; background: #252526; border: 1px solid #3c3c3c; border-radius: 3px;
+    padding: 8px 10px; font-size: 13px; color: #b5cea8; min-height: 36px;
+    word-break: break-all; white-space: pre-wrap;
+  }
+  .count { color: #858585; font-size: 12px; margin-left: auto; }
+  hr { border: none; border-top: 1px solid #3c3c3c; margin: 16px 0; }
+</style>
+</head>
+<body>
+
+<h2>DB Column Picker</h2>
+<p style="color:#858585;font-size:12px;margin-bottom:12px;">从 DBeaver 复制结果粘贴进来，勾选需要的列，一键生成 SQL</p>
+
+<textarea id="raw-input" placeholder="粘贴 DBeaver 查询结果（包含列名行和分隔行都没关系）..."></textarea>
+<div style="display:flex;gap:8px;margin-top:8px;">
+  <button onclick="parse()">解析列名</button>
+  <button class="secondary" onclick="clearAll()">清空</button>
+</div>
+
+<div id="columns-area">
+  <hr>
+  <h2>选择列 <span id="sel-count" class="count"></span></h2>
+  <div class="toolbar">
+    <input class="search-box" id="search" placeholder="搜索列名..." oninput="filterCols()">
+    <button class="secondary" onclick="selectAll()">全选</button>
+    <button class="secondary" onclick="selectNone()">全不选</button>
+  </div>
+  <div id="col-list"></div>
+</div>
+
+<div id="output-area">
+  <hr>
+  <h2>输出</h2>
+  <div class="output-block">
+    <label>列名列表</label>
+    <div class="output-row">
+      <div class="output-box" id="out-cols"></div>
+      <button onclick="copyText('out-cols', this)">复制</button>
+    </div>
+  </div>
+  <div class="output-block">
+    <label>完整 SELECT 语句</label>
+    <div class="output-row">
+      <div class="output-box" id="out-sql"></div>
+      <button onclick="copyText('out-sql', this)">复制</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let allCols = [];
+
+function parse() {
+  const raw = document.getElementById('raw-input').value.trim();
+  if (!raw) return;
+
+  const lines = raw.split('\n');
+  // 找第一行（列名行）：包含 | 且不是纯 - 和 + 的行
+  const headerLine = lines.find(l => l.includes('|') && !/^[\s\-\+]+$/.test(l));
+  if (!headerLine) { alert('没找到列名行，请确认格式包含 | 分隔符'); return; }
+
+  const cols = headerLine.split('|')
+    .map(c => c.trim())
+    .filter(c => c.length > 0);
+
+  if (cols.length === 0) { alert('解析出0列，请检查格式'); return; }
+
+  // 标记重复列名
+  const seen = {};
+  allCols = cols.map((name, i) => {
+    const count = (seen[name] = (seen[name] || 0) + 1);
+    return { name, index: i, duplicate: false, displayName: name, _count: count };
+  });
+  // 第二遍：标记重复
+  const nameCount = {};
+  allCols.forEach(c => nameCount[c.name] = (nameCount[c.name] || 0) + 1);
+  let dupIdx = {};
+  allCols.forEach(c => {
+    if (nameCount[c.name] > 1) {
+      c.duplicate = true;
+      dupIdx[c.name] = (dupIdx[c.name] || 0) + 1;
+      c.displayName = `${c.name} (${dupIdx[c.name]})`;
+    }
+  });
+
+  renderCols();
+  updateOutput();
+  document.getElementById('columns-area').style.display = 'block';
+  document.getElementById('output-area').style.display = 'block';
+}
+
+function renderCols() {
+  const list = document.getElementById('col-list');
+  list.innerHTML = '';
+  allCols.forEach((col, i) => {
+    const div = document.createElement('div');
+    div.className = 'col-item' + (col.duplicate ? ' duplicate' : '');
+    div.dataset.index = i;
+    div.innerHTML = `<input type="checkbox" id="cb${i}" checked onchange="updateOutput()">
+      <label for="cb${i}">${col.displayName}</label>`;
+    div.addEventListener('click', e => {
+      if (e.target.tagName !== 'INPUT') {
+        const cb = div.querySelector('input');
+        cb.checked = !cb.checked;
+        updateOutput();
+      }
+    });
+    list.appendChild(div);
+  });
+  updateSelCount();
+}
+
+function filterCols() {
+  const q = document.getElementById('search').value.toLowerCase();
+  document.querySelectorAll('.col-item').forEach(div => {
+    const name = allCols[div.dataset.index].displayName.toLowerCase();
+    div.classList.toggle('hidden', q && !name.includes(q));
+  });
+}
+
+function selectAll() {
+  document.querySelectorAll('#col-list input').forEach(cb => cb.checked = true);
+  updateOutput();
+}
+
+function selectNone() {
+  document.querySelectorAll('#col-list input').forEach(cb => cb.checked = false);
+  updateOutput();
+}
+
+function updateOutput() {
+  const selected = [];
+  document.querySelectorAll('#col-list input').forEach((cb, i) => {
+    if (cb.checked) selected.push(allCols[i].name);
+  });
+
+  const colList = selected.join(', ');
+  const sqlStmt = selected.length > 0
+    ? `SELECT\n  ${selected.join(',\n  ')}\nFROM {TABLE}\nWHERE {CONDITION}`
+    : '';
+
+  document.getElementById('out-cols').textContent = colList || '（未选择任何列）';
+  document.getElementById('out-sql').textContent = sqlStmt || '（未选择任何列）';
+  updateSelCount(selected.length);
+}
+
+function updateSelCount(n) {
+  if (n === undefined) {
+    n = document.querySelectorAll('#col-list input:checked').length;
+  }
+  document.getElementById('sel-count').textContent = `${n} / ${allCols.length} 列已选`;
+}
+
+function copyText(id, btn) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '已复制!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
+  });
+}
+
+function clearAll() {
+  document.getElementById('raw-input').value = '';
+  document.getElementById('search').value = '';
+  document.getElementById('columns-area').style.display = 'none';
+  document.getElementById('output-area').style.display = 'none';
+  allCols = [];
+}
+</script>
+</body>
+</html>
