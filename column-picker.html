@@ -108,9 +108,20 @@
 </head>
 <body>
 
-<div class="tabs">
-  <div class="tab active" onclick="switchTab('picker')">列选择器</div>
-  <div class="tab" onclick="switchTab('merger')">结果合并</div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+  <div class="tabs" style="margin-bottom:0;border-bottom:none;">
+    <div class="tab active" onclick="switchTab('picker')">列选择器</div>
+    <div class="tab" onclick="switchTab('merger')">结果合并</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <span style="font-size:12px;color:#858585;">随机ID</span>
+    <div id="rand-id" onclick="genRandId()" title="点击重新生成"
+      style="background:#252526;border:1px solid #3c3c3c;border-radius:3px;padding:5px 10px;
+             font-size:13px;color:#b5cea8;cursor:pointer;letter-spacing:1px;min-width:110px;text-align:center;">
+      —
+    </div>
+    <button onclick="copyRandId(this)" style="padding:5px 12px;">复制</button>
+  </div>
 </div>
 
 <!-- ═══════════ TAB 1: Column Picker ═══════════ -->
@@ -177,6 +188,7 @@
       <h2 style="margin:0">合并结果 <span id="merge-count" class="count"></span></h2>
       <button onclick="copyTableTSV()" style="margin-left:auto">复制为 TSV</button>
       <button class="secondary" onclick="copyTableCSV()">复制为 CSV</button>
+      <button class="secondary" onclick="copyTableMD()">复制为 Markdown</button>
     </div>
     <div id="merged-table-wrap" style="max-height:400px;overflow-y:auto;margin-top:8px;"></div>
   </div>
@@ -266,7 +278,7 @@ function updateSelCount(n) {
 }
 
 function copyText(id, btn) {
-  navigator.clipboard.writeText(document.getElementById(id).textContent).then(() => {
+  copyRaw(document.getElementById(id).textContent, () => {
     const orig = btn.textContent; btn.textContent = '已复制!'; btn.classList.add('copied');
     setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
   });
@@ -410,14 +422,46 @@ function copyTableCSV() {
   copyRaw(lines.join('\n'));
 }
 
-function copyRaw(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    const btns = document.querySelectorAll('.table-actions button');
-    btns.forEach(b => { b.classList.add('copied'); setTimeout(() => b.classList.remove('copied'), 1500); });
+function copyTableMD() {
+  const header = `| ${mergedHeaders.join(' | ')} |`;
+  const sep = `| ${mergedHeaders.map(() => '---').join(' | ')} |`;
+  const rows = mergedRows.filter(r => !r.dup).map(r => `| ${r.cells.map(c => c.replace(/\|/g, '\\|')).join(' | ')} |`);
+  copyRaw([header, sep, ...rows].join('\n'));
+}
+
+function copyRaw(text, onDone) {
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    if (onDone) onDone();
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(onDone ?? (() => {})).catch(fallback);
+  } else {
+    fallback();
+  }
+}
+
+function genRandId() {
+  const digits = '01' + Array.from({length: 8}, () => Math.floor(Math.random() * 10)).join('');
+  document.getElementById('rand-id').textContent = digits;
+  return digits;
+}
+
+function copyRandId(btn) {
+  const val = document.getElementById('rand-id').textContent;
+  if (val === '—') genRandId();
+  copyRaw(document.getElementById('rand-id').textContent, () => {
+    const orig = btn.textContent; btn.textContent = '已复制!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1500);
   });
 }
 
-// Init merger with 2 zones
+// Init
+genRandId();
 addPasteZone();
 addPasteZone();
 </script>
