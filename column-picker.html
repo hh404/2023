@@ -180,6 +180,9 @@
     <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#858585;cursor:pointer;">
       <input type="checkbox" id="dedup-check" checked style="accent-color:#007acc"> 自动去重
     </label>
+    <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#858585;cursor:pointer;">
+      <input type="checkbox" id="hide-empty-check" checked onchange="toggleEmptyCols()" style="accent-color:#007acc"> 隐藏空列
+    </label>
   </div>
 
   <div id="merge-output" class="hidden-area">
@@ -395,20 +398,41 @@ function mergeResults() {
   document.getElementById('merge-output').style.display = 'block';
 }
 
+let emptyColIndices = new Set();
+
 function renderMergedTable() {
+  const visibleRows = mergedRows.filter(r => !r.dup);
   const dupCount = mergedRows.filter(r => r.dup).length;
-  const shown = mergedRows.filter(r => !r.dup).length;
   document.getElementById('merge-count').textContent =
-    `${shown} 行` + (dupCount > 0 ? `（已去除 ${dupCount} 条重复）` : '');
+    `${visibleRows.length} 行` + (dupCount > 0 ? `（已去除 ${dupCount} 条重复）` : '');
+
+  emptyColIndices = new Set(
+    mergedHeaders.map((_, i) => i).filter(i => visibleRows.every(r => !r.cells[i]))
+  );
+
+  const hideEmpty = document.getElementById('hide-empty-check').checked;
 
   const wrap = document.getElementById('merged-table-wrap');
-  const thead = `<thead><tr>${mergedHeaders.map(h => `<th>${h}</th>`).join('')}</tr></thead>`;
+  const thead = `<thead><tr>${mergedHeaders.map((h, i) =>
+    `<th data-col="${i}" ${hideEmpty && emptyColIndices.has(i) ? 'style="display:none"' : ''}>${h}</th>`
+  ).join('')}</tr></thead>`;
   const tbody = mergedRows.map(r =>
     `<tr class="${r.dup ? 'dup-row' : ''}">
-      ${r.cells.map((c, i) => `<td>${c || '<span style="color:#555">—</span>'}</td>`).join('')}
+      ${r.cells.map((c, i) =>
+        `<td data-col="${i}" ${hideEmpty && emptyColIndices.has(i) ? 'style="display:none"' : ''}>${c || '<span style="color:#555">—</span>'}</td>`
+      ).join('')}
     </tr>`
   ).join('');
   wrap.innerHTML = `<table>${thead}<tbody>${tbody}</tbody></table>`;
+}
+
+function toggleEmptyCols() {
+  const hide = document.getElementById('hide-empty-check').checked;
+  emptyColIndices.forEach(i => {
+    document.querySelectorAll(`[data-col="${i}"]`).forEach(el => {
+      el.style.display = hide ? 'none' : '';
+    });
+  });
 }
 
 function copyTableTSV() {
