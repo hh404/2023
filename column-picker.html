@@ -399,6 +399,7 @@ function mergeResults() {
 }
 
 let emptyColIndices = new Set();
+let sortState = { col: -1, asc: true };
 
 function renderMergedTable() {
   const visibleRows = mergedRows.filter(r => !r.dup);
@@ -411,12 +412,30 @@ function renderMergedTable() {
   );
 
   const hideEmpty = document.getElementById('hide-empty-check').checked;
+  renderMergedTbody(hideEmpty);
+}
+
+function renderMergedTbody(hideEmpty) {
+  hideEmpty = hideEmpty ?? document.getElementById('hide-empty-check').checked;
+
+  const sorted = [...mergedRows];
+  if (sortState.col >= 0) {
+    sorted.sort((a, b) => {
+      const av = a.cells[sortState.col] || '';
+      const bv = b.cells[sortState.col] || '';
+      const n = av.localeCompare(bv, undefined, { numeric: true });
+      return sortState.asc ? n : -n;
+    });
+  }
 
   const wrap = document.getElementById('merged-table-wrap');
-  const thead = `<thead><tr>${mergedHeaders.map((h, i) =>
-    `<th data-col="${i}" ${hideEmpty && emptyColIndices.has(i) ? 'style="display:none"' : ''}>${h}</th>`
-  ).join('')}</tr></thead>`;
-  const tbody = mergedRows.map(r =>
+  const thead = `<thead><tr>${mergedHeaders.map((h, i) => {
+    const hidden = hideEmpty && emptyColIndices.has(i) ? 'style="display:none"' : '';
+    const arrow = sortState.col === i ? (sortState.asc ? ' ▲' : ' ▼') : '';
+    return `<th data-col="${i}" ${hidden} onclick="sortByCol(${i})"
+      style="cursor:pointer;user-select:none${hidden ? ';display:none' : ''}">${h}${arrow}</th>`;
+  }).join('')}</tr></thead>`;
+  const tbody = sorted.map(r =>
     `<tr class="${r.dup ? 'dup-row' : ''}">
       ${r.cells.map((c, i) =>
         `<td data-col="${i}" ${hideEmpty && emptyColIndices.has(i) ? 'style="display:none"' : ''}>${c || '<span style="color:#555">—</span>'}</td>`
@@ -424,6 +443,13 @@ function renderMergedTable() {
     </tr>`
   ).join('');
   wrap.innerHTML = `<table>${thead}<tbody>${tbody}</tbody></table>`;
+}
+
+function sortByCol(i) {
+  sortState = sortState.col === i
+    ? { col: i, asc: !sortState.asc }
+    : { col: i, asc: true };
+  renderMergedTbody();
 }
 
 function toggleEmptyCols() {
